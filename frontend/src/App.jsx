@@ -23,6 +23,8 @@ function App() {
   // Logout Confirmation Modal State
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
+  const [isSortOpen, setIsSortOpen] = useState(false);
+
   // Persist dark mode preference
   useEffect(() => {
     localStorage.setItem('darkMode', JSON.stringify(darkMode));
@@ -128,13 +130,13 @@ function App() {
           >
             <Sun className="text-white" size={32} />
           </motion.div>
-          <h1 className={`text-3xl font-black mb-2 ${darkMode ? 'text-white' : 'text-gray-800'} tracking-tight`}>WeatherIndex</h1>
+          <h1 className={`text-3xl font-black mb-2 ${darkMode ? 'text-white' : 'text-gray-800'} tracking-tight`}>COMFORT INDEX</h1>
           <p className={`${darkMode ? 'text-gray-400' : 'text-gray-500'} mb-8 font-medium`}>Secure analytics for city comfort. Please login to access the dashboard.</p>
           <button 
             onClick={() => loginWithRedirect()}
             className="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold hover:bg-blue-700 transition-all shadow-blue-200 shadow-lg flex items-center justify-center gap-2"
           >
-            <ShieldCheck size={20} /> Login / Sign Up
+            <ShieldCheck size={20} /> Login 
           </button>
         </motion.div>
       </motion.div>
@@ -229,26 +231,63 @@ function App() {
           </div>
 
           {/* Sort Dropdown */}
-          <div className="relative min-w-[220px]">
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className={`w-full appearance-none pl-6 pr-12 py-3.5 rounded-2xl font-bold cursor-pointer transition-all focus:ring-2 focus:ring-blue-500 focus:outline-none ${
-                darkMode 
-                  ? 'bg-gray-800 text-white border-2 border-gray-700' 
-                  : 'bg-white text-gray-900 border-2 border-gray-100'
-              }`}
-            >
-              <option value="rank">Sort by Rank</option>
-              <option value="temperature">Sort by Temperature</option>
-            </select>
-            <ChevronDown 
-              size={20} 
-              className={`absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none ${
-                darkMode ? 'text-gray-400' : 'text-gray-500'
-              }`}
-            />
-          </div>
+         {/* Custom Sort Dropdown */}
+<div className="relative min-w-[220px] z-20">
+  <motion.button
+    whileTap={{ scale: 0.98 }}
+    onClick={() => setIsSortOpen(!isSortOpen)}
+    className={`w-full flex items-center justify-between px-6 py-3.5 rounded-2xl font-bold transition-all border-2 ${
+      darkMode 
+        ? 'bg-gray-800 text-white border-gray-700 hover:border-blue-500/50' 
+        : 'bg-white text-gray-900 border-gray-100 hover:border-blue-200 shadow-sm'
+    }`}
+  >
+    <span>{sortBy === 'rank' ? 'Sort by Rank' : 'Sort by Temperature'}</span>
+    <motion.div
+      animate={{ rotate: isSortOpen ? 180 : 0 }}
+      transition={{ duration: 0.2 }}
+    >
+      <ChevronDown size={20} className={darkMode ? 'text-gray-400' : 'text-gray-500'} />
+    </motion.div>
+  </motion.button>
+
+  {/* Dropdown Options List */}
+  <AnimatePresence>
+    {isSortOpen && (
+      <motion.div
+        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+        animate={{ opacity: 1, y: 5, scale: 1 }}
+        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+        className={`absolute top-full left-0 right-0 mt-2 p-2 rounded-2xl shadow-2xl border-2 z-30 ${
+          darkMode 
+            ? 'bg-gray-800 border-gray-700' 
+            : 'bg-white border-gray-50'
+        }`}
+      >
+        <button
+          onClick={() => { setSortBy('rank'); setIsSortOpen(false); }}
+          className={`w-full text-left px-4 py-3 rounded-xl font-bold transition-colors ${
+            sortBy === 'rank' 
+              ? 'bg-blue-600 text-white' 
+              : darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-blue-50'
+          }`}
+        >
+          Sort by Rank
+        </button>
+        <button
+          onClick={() => { setSortBy('temperature'); setIsSortOpen(false); }}
+          className={`w-full text-left px-4 py-3 rounded-xl font-bold transition-colors mt-1 ${
+            sortBy === 'temperature' 
+              ? 'bg-blue-600 text-white' 
+              : darkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-blue-50'
+          }`}
+        >
+          Sort by Temperature
+        </button>
+      </motion.div>
+    )}
+  </AnimatePresence>
+</div>
         </motion.div>
 
         {/* Weather Grid */}
@@ -473,7 +512,7 @@ function App() {
                   <Sun className="text-white" size={18} />
                 </div>
                 <span className={`text-lg font-black ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                  WeatherIndex
+                  COMFORT INDEX
                 </span>
               </div>
               <p className={`text-xs ${darkMode ? 'text-gray-500' : 'text-gray-400'} text-center md:text-left`}>
