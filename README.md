@@ -16,7 +16,6 @@ A professional, secure, and responsive weather analytics dashboard that calculat
 - **Frontend:** React.js, Tailwind CSS, Framer Motion, Recharts, Auth0 SDK.
 - **Backend:** Node.js, Express.js, Axios, Jest (Testing).
 - **API:** OpenWeatherMap API.
-- 
 ---
 
 ## 🧠 Design: Comfort Index Algorithm
@@ -53,7 +52,6 @@ I implemented a **Server-Side In-Memory Cache** with a **5-minute TTL (Time To L
 - **My Solution:** I resolved this by enabling the "Customize MFA Factors using Actions" toggle under Security > Multi-factor Auth > Additional Settings. This allowed me to override the default enrollment behavior.
 - **Technical Implementation:** I authored a custom Auth0 Post-Login Action using the api.authentication.challengeWith method. By programmatically directing the authentication flow to challenge the user via Email, I ensured that verified users are directly prompted for an Email OTP code. This implementation successfully fulfills the assignment's security requirement for Email-based Multi-Factor Authentication.
 
-- 
 ### 2. Static City Management
 - **Limitation:** The list of 10 cities is currently managed via a static `cities.json` file.
 - **Reasoning:** I followed the specific instructions in the assignment PDF. 
@@ -101,7 +99,7 @@ npm run dev
 
 # Run unit tests for the algorithm
 npm test
-
+```
 ### 2. Frontend Setup
 The frontend is built with **React** and **Vite**, utilizing **Tailwind CSS** for styling and **Framer Motion** for animations.
 
@@ -114,7 +112,7 @@ npm install
 
 # Start the frontend application (runs on http://localhost:5173)
 npm run dev
-
+```
 ---
 
 ## 👨‍💻 Developer Information
