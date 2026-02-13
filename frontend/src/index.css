@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom styles for select dropdown */
+select {
+  background-position: right 0.5rem center;
+  background-size: 1.5em 1.5em;
+}
+
+/* Custom styles for select dropdown options */
+select option {
+  background-color: white;
+  color: #1f2937;
+  padding: 12px 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  min-height: 44px;
+}
+
+/* Dark mode support for select dropdown */
+.dark select option {
+  background-color: #1f2937;
+  color: white;
+}
+
+/* Improve dropdown spacing on different browsers */
+select:focus option {
+  padding: 12px 16px;
+}
+
+/* Firefox specific fixes */
+@-moz-document url-prefix() {
+  select option {
+    padding: 10px 16px;
+  }
+}
