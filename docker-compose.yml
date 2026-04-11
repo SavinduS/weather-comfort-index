@@ -1,0 +1,30 @@
+services:
+  # Backend Service
+  backend-api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      - NODE_ENV=production
+      - PORT=5001
+    networks:
+      - app-network
+
+  # Frontend Service
+  frontend-app:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+    depends_on:
+      - backend-api
+
+# Define the shared network
+networks:
+  app-network:
+    driver: bridge
